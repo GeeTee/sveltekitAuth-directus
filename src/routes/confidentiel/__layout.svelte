@@ -15,9 +15,11 @@
   }
 </script>
 <script>
+  import Nav from '$lib/partials/NavConfidentielle.svelte'
   export let user;
   // import { session } from '$app/stores';
   // $session.user;
 </script>
+<Nav />
 <h2>Hi! You are registered with email {user.email}</h2>
 <slot />

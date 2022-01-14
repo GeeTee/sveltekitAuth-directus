@@ -7,7 +7,7 @@
     },
     {
       href: '/confidentiel',
-      name: `${$session.user ? "🔓" : "🔒"} Protected`
+      name: `${$session.user ? "🔓" : "🔒"} Confidentiel`
     }
   ];
   async function handleSignOut() {

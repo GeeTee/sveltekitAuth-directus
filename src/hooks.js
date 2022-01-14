@@ -1,16 +1,20 @@
 import { parse } from 'cookie';
-import { getSession as getSessionFromApi } from './lib/helpers/api';
+import { getSession as getSessionFromApi, createSession } from './lib/helpers/api';
 
 /** @type {import('@sveltejs/kit').Handle} */
 export async function handle({ request, resolve }) {
 	const cookies = parse(request.headers.cookie || '');
 
-	if (cookies.session_id) {
-		const session = await getSessionFromApi(cookies.session_id);
-		if (session) {
-			request.locals.user = { email: session.email };
-			return resolve(request);
-		}
+	if (cookies.directus_refresh_token) {
+		console.log('hooks directus token')
+		// await createSession()
+		request.locals.user = { email: ('test@dom.com') };
+		// const session = await getSessionFromApi(cookies.directus_refresh_token);
+		// if (session) {
+		// 	request.locals.user = { email: session.email };
+		// 	return resolve(request);
+		// }
+		return resolve(request);
 	}
 
 	request.locals.user = null;
@@ -22,7 +26,7 @@ export function getSession(request) {
 	return request?.locals?.user
 		? {
 				user: {
-					email: request.locals.user.email,
+					email: request.locals.user,
 				},
 		  }
 		: {};

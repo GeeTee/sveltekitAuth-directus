@@ -1,4 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
+import d from '$lib/helpers/directus'
 
 const users = [
 	{
@@ -10,11 +11,22 @@ const users = [
 
 let sessions = [];
 
-export const getUserByEmail = async (email) => {
-	const existingUser = users.find((user) => user.email === email);
-	if (!existingUser) return Promise.resolve(null);
-	return Promise.resolve(existingUser);
-};
+export const getCredentials = async (email, password) => {
+	const credentials = await d.loging(email, password)
+	if (!credentials) return Promise.resolve(null);
+	return Promise.resolve(credentials)
+}
+
+// export const getUser = async (email, password) => {
+// 	// USER EXIST ?
+// 	const existingUser = users.find((user) => user.email === email);
+
+
+
+// 	const user = await d.getCurrentUser()
+
+// 	return Promise.resolve(existingUser);
+// };
 
 export const registerUser = (user) => {
 	const existingUser = users.find((u) => u.email === user.email);
@@ -23,12 +35,14 @@ export const registerUser = (user) => {
 	return Promise.resolve(user);
 };
 
-export const createSession = (email) => {
+export const createSession = async (access_token) => {
+	const {email} = await d.getCurrentUser(access_token)
 	const session = {
 		id: uuidv4(),
 		email,
 	};
 	sessions.push(session);
+	console.log('createSession sessions', sessions)
 	return Promise.resolve(session);
 };
 

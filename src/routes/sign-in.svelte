@@ -1,6 +1,6 @@
 <script>
-  let email = 'mail@example.com'
-  let password = 'thisisnotsecret'
+  let email = 'test-1@galites.net'
+  let password = 'Gien++45500'
   let error;
   async function handleSubmit() {
     const response = await fetch('/api/sign-in', {
